@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera and Gallery Upload</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #f4f4f9;
+        }
+
+        /* The clickable icon/button */
+        .upload-btn {
+            width: 80px;
+            height: 80px;
+            background-color: #007bff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+
+        .upload-btn:active {
+            transform: scale(0.9);
+        }
+
+        .upload-btn svg {
+            fill: white;
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Image Preview Styling */
+        #previewContainer {
+            margin-top: 20px;
+            width: 300px;
+            height: 300px;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            display: none; /* Hidden until image is selected */
+            overflow: hidden;
+            background-color: white;
+        }
+
+        #previewContainer img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        p {
+            color: #666;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+   <br/>
+   <br/>
+
+   <div style="height: 100px;"></div>
+   <p>Only Gallery</p>
+
+   <input type="file" id="imageInput" accept="image/*">
+
+   <div style="height: 20px;"></div>
+   <p>Only Camera</p>
+   <input type="file" id="cameraInput" accept="image/*" capture="environment">
+    <div style="height: 20px;"></div>
+    <p>Only Files</p>
+    <input type="file">
+
+    <br/>
+    <br/>
+
+    <p>Click to take a photo or upload</p>
+
+ <div class="upload-btn" onclick="document.getElementById('imageInput').click();">
+        <svg viewBox="0 0 24 24"><path d="M4 4h3l2-2h6l2 2h3c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm8 15c3.31 0 6-2.69 6-6s-2.69-6-6-6-6 2.69 6 6 2.69 6 6 6z"/><circle cx="12" cy="13" r="3.3"/></svg>
+    </div>
+    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+    <div id="previewContainer">
+        <img id="imagePreview" src="" alt="Preview">
+    </div>
+
+    <script>
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const previewContainer = document.getElementById('previewContainer');
+
+        imageInput.addEventListener('change', function() {
+            const file = this.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                }
+
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+
+</body>
+</html>
